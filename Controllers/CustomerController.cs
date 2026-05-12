@@ -1,4 +1,5 @@
-﻿using Customer.Model;
+﻿using Customer.Entities;
+using Customer.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -25,5 +26,20 @@ namespace Customer.Controllers
             var canConnect = _context.Customertbl.ToList();
             return Ok(canConnect);
         }
+
+        [HttpGet("{id}")]
+        public IActionResult Get(int id)
+        {
+            //CustomerDetailViewModel customer=new CustomerDetailViewModel(); 
+            //customer.id = 1;
+            //customer.name = "Test";
+
+            var canConnect = _context.Customertbl.Where(x=>x.id==id).Select(c=> new Customertbl {
+            id=c.id,
+            name=c.name
+            });
+            return Ok(canConnect);
+        }
+
     }
 }
